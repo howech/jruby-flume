@@ -45,9 +45,9 @@ when flume master and flume nodes are started.
 
        node: jRubySource("/path/to/source.rb") | { jRubyDecorator("/path/to/decorator.rb") => jRubySink("/path/to/sink.rb") }
 
-I have not tested this yet in distributed mode, but I suspect that the ruby 
-scripts will have to be located in the same local directory on every machine
-that expects to be able to use them.
+ I have not tested this yet in distributed mode, but I suspect that the ruby 
+ scripts will have to be located in the same local directory on every machine
+ that expects to be able to use them.
 
 4. Enjoy!
    
