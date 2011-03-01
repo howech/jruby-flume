@@ -28,7 +28,7 @@ Getting Started
 
 Follow the instructions to install flume plugins. Basically:
 
-1. Modify your flume-conf.xml
+1. Modify your flume-site.xml
        <!--- ================================================= -->
        <!--- Flume Plugins =================================== -->
        <!--- ================================================= -->
@@ -39,7 +39,7 @@ Follow the instructions to install flume plugins. Basically:
        </property>
 
 2. Ensure that both jruby.jar and jruby-flume.jar are on the FLUME_CLASSPATH
-when flume master and flume nodes are started.
+when flume master and flume nodes are started. (Or, you can drop these jars in the /usr/lib/flume/lib directory...)
 
 3. Set up a flume data path:
 
@@ -48,9 +48,15 @@ when flume master and flume nodes are started.
 4. Enjoy!
 
 
-TODO
-----   
-I have not tested this yet in distributed mode, but I suspect that the ruby 
-scripts will have to be located in the same local directory on every machine
-that expects to be able to use them.
+Notes
+-----
+
+If you need access to a flume context object, you can now get to it through the "$context" global variable.
+
+If you prefer to use relative paths for script names, they should start from your "FLUME_HOME" directory. By default this 
+will be something like "/usr/lib/flume". If you follow the convention of making a scripts directory in that directory, you can
+access your scripts by "jRubyDecorator("scripts/some_script.rb").
+
+In distributed mode, you need to have scripts deployed to both the master node and to the nodes that will run the scripts. 
+
 
