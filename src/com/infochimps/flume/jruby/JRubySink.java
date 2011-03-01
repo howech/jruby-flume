@@ -15,9 +15,11 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import javax.script.SimpleBindings;
 
 /**
  * Simple source that creates a ruby class determinded by a script.
@@ -39,9 +41,10 @@ public class JRubySink extends EventSink.Base {
 
                 ScriptEngine jruby = new ScriptEngineManager().getEngineByName("ruby");
                 jruby.put(ScriptEngine.ARGV, Arrays.copyOfRange(argv, 1, argv.length));
-
+                Bindings bindings = new SimpleBindings();
+                bindings.put("context", cntxt);
                 try {
-                    s = (EventSink) jruby.eval(new BufferedReader(new FileReader(argv[0])));
+                    s = (EventSink) jruby.eval(new BufferedReader(new FileReader(argv[0])),bindings);
                 } catch (FileNotFoundException e) {
                     throw new IllegalArgumentException("Script file not found: " + argv[0], e);
                 } catch (ScriptException e) {

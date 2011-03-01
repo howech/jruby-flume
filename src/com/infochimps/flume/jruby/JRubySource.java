@@ -15,9 +15,11 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import javax.script.SimpleBindings;
 
 /**
  * Simple source that creates a ruby class determinded by a script.
@@ -38,9 +40,10 @@ public class JRubySource extends EventSource.Base {
 
                 ScriptEngine jruby = new ScriptEngineManager().getEngineByName("ruby");
                 jruby.put(ScriptEngine.ARGV, Arrays.copyOfRange(argv, 1, argv.length));
-
+                Bindings bindings = new SimpleBindings();
+                bindings.put("context", ctx);
                 try {
-                    s = (EventSource) jruby.eval(new BufferedReader(new FileReader(argv[0])));
+                    s = (EventSource) jruby.eval(new BufferedReader(new FileReader(argv[0])),bindings);
                 } catch (FileNotFoundException e) {
                     throw new IllegalArgumentException("Script file not found: " + argv[0], e);
                 } catch (ScriptException e) {
@@ -49,6 +52,8 @@ public class JRubySource extends EventSource.Base {
 
                 return s;
             }
+
+            @Override
             public EventSource build(String... strings) {
                 return build(null,strings);
             }
