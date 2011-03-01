@@ -32,7 +32,4 @@ end
 # it will get returned as the value of the "eval" function on the java side of
 # the world.
 
-# The constructor for the EventSinkDecorator can take a paramter, but is happy
-# with a java "null". Jruby does the right thing in translating a ruby nil into
-# a java null.
-Decorator.new( nil )
+Decorator.new( $context )
