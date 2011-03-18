@@ -40,9 +40,10 @@ public class JRubySink extends EventSink.Base {
                 EventSink s = null;
 
                 ScriptEngine jruby = new ScriptEngineManager().getEngineByName("ruby");
-                jruby.put(ScriptEngine.ARGV, Arrays.copyOfRange(argv, 1, argv.length));
+               // jruby.put(ScriptEngine.ARGV, Arrays.copyOfRange(argv, 1, argv.length));
                 Bindings bindings = new SimpleBindings();
                 bindings.put("context", cntxt);
+                bindings.put("args", Arrays.copyOfRange(argv, 1, argv.length));
                 try {
                     s = (EventSink) jruby.eval(new BufferedReader(new FileReader(argv[0])),bindings);
                 } catch (FileNotFoundException e) {

@@ -39,9 +39,10 @@ public class JRubySource extends EventSource.Base {
                 EventSource s = null;
 
                 ScriptEngine jruby = new ScriptEngineManager().getEngineByName("ruby");
-                jruby.put(ScriptEngine.ARGV, Arrays.copyOfRange(argv, 1, argv.length));
+                //jruby.put(ScriptEngine.ARGV, Arrays.copyOfRange(argv, 1, argv.length));
                 Bindings bindings = new SimpleBindings();
                 bindings.put("context", ctx);
+                bindings.put("args", Arrays.copyOfRange(argv, 1, argv.length));
                 try {
                     s = (EventSource) jruby.eval(new BufferedReader(new FileReader(argv[0])),bindings);
                 } catch (FileNotFoundException e) {

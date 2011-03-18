@@ -51,7 +51,7 @@ when flume master and flume nodes are started. (Or, you can drop these jars in t
 Notes
 -----
 
-If you need access to a flume context object, you can now get to it through the "$context" global variable.
+If you need access to a flume context object, you can now get to it through the "$context" global variable. Also, additional arguments to the script are available through the "$args" global variable.
 
 If you prefer to use relative paths for script names, they should start from your "FLUME_HOME" directory. By default this 
 will be something like "/usr/lib/flume". If you follow the convention of making a scripts directory in that directory, you can

@@ -15,6 +15,7 @@ import javax.script.ScriptException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import javax.script.Bindings;
 import javax.script.SimpleBindings;
 
@@ -42,9 +43,10 @@ public class JRubyDecorator<S extends EventSink> extends EventSinkDecorator<S> {
                         "usage: jRubyDecorator script.rb [optional script arguments]");
 
                 ScriptEngine jruby = new ScriptEngineManager().getEngineByName("ruby");
-                jruby.put(ScriptEngine.ARGV, java.util.Arrays.copyOfRange(argv, 1, argv.length));
+                //jruby.put(ScriptEngine.ARGV, java.util.Arrays.copyOfRange(argv, 1, argv.length));
                 Bindings bindings = new SimpleBindings();
                 bindings.put("context", context);
+                bindings.put("args", Arrays.copyOfRange(argv, 1, argv.length));
                 try {
                     d = (EventSinkDecorator<EventSink>) jruby.eval(new BufferedReader(new FileReader(argv[0])),bindings);
                 } catch (FileNotFoundException e) {
